@@ -1,7 +1,7 @@
 {
   "name": "solid-start-demo",
   "scripts": {
-    "dev": "solid-start dev",
+    "dev": "solid-start dev --open",
     "build": "solid-start build",
     "start": "solid-start start"
   },
