@@ -1,19 +1,16 @@
 // @refresh reload
-import {lazy, Suspense} from "solid-js";
+import {Suspense} from "solid-js";
 import {
   A,
   Body,
   ErrorBoundary,
+  FileRoutes,
   Head,
   Html,
-  Meta, Route,
-  Routes,
-  Scripts,
+  Meta, Routes, Scripts,
   Title,
 } from "solid-start";
-import Layout from "~/pages/Layout";
-import Home from "~/pages/Home";
-const About = lazy(async () => import('./pages/About'));
+import { MDXProvider } from "solid-mdx";
 
 export default function Root() {
   return (
@@ -27,10 +24,7 @@ export default function Root() {
         <Suspense>
           <ErrorBoundary>
             <Routes>
-              <Route path={'/'} element={Layout}>
-                <Route path={''} element={Home} />
-                <Route path={'about'} element={About} />
-              </Route>
+            <FileRoutes />
             </Routes>
           </ErrorBoundary>
         </Suspense>

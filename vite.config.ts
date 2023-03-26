@@ -1,23 +1,19 @@
 import solid from "solid-start/vite";
-import { defineConfig } from "vite";
+import {defineConfig, UserConfig} from "vite";
+import mdx from "solid-start-mdx";
 
-export default defineConfig({
-  plugins: [solid()],
-  build:{
-    minify:false,
-    rollupOptions:{
-      output:{
-        manualChunks(id){
-          console.log(id)
-          if (id.includes('/node_modules/solid-js/') || id.includes('/node_modules/@solidjs/')) {
-            return 'solid';
-          }
-
-          if (id.includes('/node_modules/') && !id.includes('/node_modules/solid-start/')) {
-            return 'vendor';
-          }
-        }
-      }
+export default defineConfig(async ({ssrBuild}) => {
+    const config: UserConfig = {
+        plugins: [await mdx(), solid({
+            extensions: ['.mdx', '.md']
+        })],
     }
-  }
+
+    if (ssrBuild) {
+        config.build!.rollupOptions!.output = {
+            inlineDynamicImports: true
+        }
+    }
+
+    return config;
 });
